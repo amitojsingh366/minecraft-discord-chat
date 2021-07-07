@@ -1,10 +1,7 @@
 package net.amitoj.minecraftDiscordChat;
 
 import net.amitoj.minecraftDiscordChat.commands.CommandMinecraftDiscordChat;
-import net.amitoj.minecraftDiscordChat.listeners.DiscordChatListener;
-import net.amitoj.minecraftDiscordChat.listeners.PlayerChatListener;
-import net.amitoj.minecraftDiscordChat.listeners.PlayerJoinListener;
-import net.amitoj.minecraftDiscordChat.listeners.PlayerQuitListener;
+import net.amitoj.minecraftDiscordChat.listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -31,25 +28,15 @@ public final class MinecraftDiscordChat extends JavaPlugin {
     public void onEnable() {
         InitialisePlugin();
 
-        PlayerChatListener playerChatListener = new PlayerChatListener();
-        playerChatListener.set_enabled(isEnabled);
-        playerChatListener.set_webhookUrl(chatWebhookUrl);
-
-        PlayerJoinListener playerJoinListener = new PlayerJoinListener();
-        playerJoinListener.set_enabled(isEnabled);
-        playerJoinListener.set_webhookUrl(serverEventsWebhookUrl);
-        playerJoinListener.set_serverName(serverName);
-        playerJoinListener.set_serverIcon(serverIcon);
-
-        PlayerQuitListener playerQuitListener = new PlayerQuitListener();
-        playerQuitListener.set_enabled(isEnabled);
-        playerQuitListener.set_webhookUrl(serverEventsWebhookUrl);
-        playerQuitListener.set_serverName(serverName);
-        playerQuitListener.set_serverIcon(serverIcon);
+        PlayerChatListener playerChatListener = new PlayerChatListener(isEnabled, chatWebhookUrl);
+        PlayerJoinListener playerJoinListener = new PlayerJoinListener(isEnabled,serverEventsWebhookUrl,serverName,serverIcon);
+        PlayerQuitListener playerQuitListener = new PlayerQuitListener(isEnabled,serverEventsWebhookUrl,serverName,serverIcon);
+        PlayerDeathListener playerDeathListener = new PlayerDeathListener(isEnabled,serverEventsWebhookUrl,serverName,serverIcon);
 
         getServer().getPluginManager().registerEvents(playerChatListener, this);
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
         getServer().getPluginManager().registerEvents(playerQuitListener, this);
+        getServer().getPluginManager().registerEvents(playerDeathListener, this);
 
         sendServerStartStopMessage(serverEventsWebhookUrl, serverName, serverIcon, "start");
 

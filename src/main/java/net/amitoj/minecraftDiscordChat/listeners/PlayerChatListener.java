@@ -22,6 +22,11 @@ public class PlayerChatListener implements Listener {
     private boolean _enabled = true;
     private String _webhookUrl;
 
+    public PlayerChatListener(boolean enabled, String webhookUrl) {
+        this._enabled = enabled;
+        this._webhookUrl = webhookUrl;
+    }
+
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if(_enabled){

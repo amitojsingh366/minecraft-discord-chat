@@ -2,7 +2,7 @@ package net.amitoj.minecraftDiscordChat.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PlayerJoinListener implements Listener {
+public class PlayerDeathListener implements Listener {
     private boolean _enabled = true;
     private String _webhookUrl;
     private String _serverName;
     private String _serverIcon;
 
-    public PlayerJoinListener(boolean enabled, String webhookUrl, String serverName, String serverIcon) {
+    public PlayerDeathListener(boolean enabled, String webhookUrl, String serverName, String serverIcon) {
         this._enabled = enabled;
         this._webhookUrl = webhookUrl;
         this._serverName = serverName;
@@ -25,7 +25,7 @@ public class PlayerJoinListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
         if (_enabled) {
             HttpURLConnection con = null;
             try {
@@ -36,11 +36,11 @@ public class PlayerJoinListener implements Listener {
                 JSONArray embeds = new JSONArray();
                 JSONObject embed = new JSONObject();
                 JSONObject thumbnail = new JSONObject();
-                thumbnail.put("url", "https://mc-heads.net/avatar/" + event.getPlayer().getPlayerProfile().getName());
+                thumbnail.put("url", "https://mc-heads.net/avatar/" + event.getEntity().getPlayerProfile().getName());
 
-                embed.put("title", "Player Joined");
-                embed.put("description", event.getPlayer().getPlayerProfile().getName() + " has joined the server!");
-                embed.put("color", 65280);
+                embed.put("title", "Player Died");
+                embed.put("description", event.getDeathMessage());
+                embed.put("color", 16711680);
                 embed.put("thumbnail", thumbnail);
                 embeds.add(embed);
 
@@ -79,5 +79,3 @@ public class PlayerJoinListener implements Listener {
         this._serverIcon = _serverIcon;
     }
 }
-
-// https://cdn.amitoj.net/mc.amitoj.net/server-icon.png

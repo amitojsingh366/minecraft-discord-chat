@@ -17,6 +17,13 @@ public class PlayerQuitListener implements Listener {
     private String _serverName;
     private String _serverIcon;
 
+    public PlayerQuitListener(boolean enabled, String webhookUrl, String serverName, String serverIcon) {
+        this._enabled = enabled;
+        this._webhookUrl = webhookUrl;
+        this._serverName = serverName;
+        this._serverIcon = serverIcon;
+    }
+
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (_enabled) {
