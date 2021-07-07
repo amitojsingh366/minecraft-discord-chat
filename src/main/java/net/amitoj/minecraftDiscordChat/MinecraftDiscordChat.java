@@ -18,17 +18,18 @@ import static net.amitoj.minecraftDiscordChat.util.Util.*;
 public final class MinecraftDiscordChat extends JavaPlugin {
     JDA jda;
     DiscordChatListener discordChatListener;
+
+    boolean isEnabled = GetIsEnabled();
+    String chatWebhookUrl = GetConfig("chat_webhook_url");
+    String serverEventsWebhookUrl = GetConfig("events_webhook_url");
+    String serverName = GetConfig("server_name");
+    String serverIcon = GetConfig("server_icon");
+    String discordToken = GetConfig("discord_token");
+    String channelID = GetConfig("channel_id");
+
     @Override
     public void onEnable() {
         InitialisePlugin();
-
-        boolean isEnabled = GetIsEnabled();
-        String chatWebhookUrl = GetConfig("chat_webhook_url");
-        String serverEventsWebhookUrl = GetConfig("events_webhook_url");
-        String serverName = GetConfig("server_name");
-        String serverIcon = GetConfig("server_icon");
-        String discordToken = GetConfig("discord_token");
-        String channelID = GetConfig("channel_id");
 
         PlayerChatListener playerChatListener = new PlayerChatListener();
         playerChatListener.set_enabled(isEnabled);
@@ -49,6 +50,8 @@ public final class MinecraftDiscordChat extends JavaPlugin {
         getServer().getPluginManager().registerEvents(playerChatListener, this);
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
         getServer().getPluginManager().registerEvents(playerQuitListener, this);
+
+        sendServerStartStopMessage(serverEventsWebhookUrl, serverName, serverIcon, "start");
 
         discordChatListener = new DiscordChatListener();
         discordChatListener.set_channelID(channelID);
@@ -71,5 +74,6 @@ public final class MinecraftDiscordChat extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         jda.removeEventListener(discordChatListener);
+        sendServerStartStopMessage(serverEventsWebhookUrl, serverName, serverIcon, "stop");
     }
 }
