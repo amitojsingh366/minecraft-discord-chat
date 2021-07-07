@@ -23,6 +23,8 @@ public class Util {
         config.put("events_webhook_url", "");
         config.put("server_name", "Minecarft Server");
         config.put("server_icon", "https://packpng.com/static/pack.png");
+        config.put("discord_token", "");
+        config.put("channel_id", "");
 
         if(!Files.exists(Paths.get("./plugins/minecraftdiscordchat/"))){
             File file = new File("./plugins/minecraftdiscordchat/");
@@ -56,24 +58,8 @@ public class Util {
         return (boolean) config.get("enabled");
     }
 
-    public static String GetChatWebhookUrl(){
-        JSONObject config = new JSONObject();
-        FileReader reader = null;
-        try {
-            reader = new FileReader(_configPath);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        JSONParser jsonParser = new JSONParser();
-        try {
-            config = (JSONObject) jsonParser.parse(reader);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return (String) config.get("chat_webhook_url");
-    }
 
-    public static String GetServerEventsWebhookUrl(){
+    public static String GetConfig(String key){
         JSONObject config = new JSONObject();
         FileReader reader = null;
         try {
@@ -87,41 +73,7 @@ public class Util {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        return (String) config.get("events_webhook_url");
-    }
-
-    public static String GetServerName(){
-        JSONObject config = new JSONObject();
-        FileReader reader = null;
-        try {
-            reader = new FileReader(_configPath);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        JSONParser jsonParser = new JSONParser();
-        try {
-            config = (JSONObject) jsonParser.parse(reader);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return (String) config.get("server_name");
-    }
-
-    public static String GetServerIcon(){
-        JSONObject config = new JSONObject();
-        FileReader reader = null;
-        try {
-            reader = new FileReader(_configPath);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        JSONParser jsonParser = new JSONParser();
-        try {
-            config = (JSONObject) jsonParser.parse(reader);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return (String) config.get("server_icon");
+        return (String) config.get(key);
     }
 
     public static boolean EditData(String key, String value, String type) {
