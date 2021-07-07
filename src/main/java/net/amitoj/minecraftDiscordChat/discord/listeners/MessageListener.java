@@ -1,4 +1,4 @@
-package net.amitoj.minecraftDiscordChat.listeners;
+package net.amitoj.minecraftDiscordChat.discord.listeners;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -11,8 +11,12 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 
-public class DiscordChatListener extends ListenerAdapter {
+public class MessageListener extends ListenerAdapter {
     private String _channelID = "";
+
+    public MessageListener(String channelID) {
+        this._channelID = channelID;
+    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

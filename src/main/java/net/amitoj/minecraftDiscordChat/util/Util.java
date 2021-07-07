@@ -25,6 +25,7 @@ public class Util {
         config.put("server_icon", "https://packpng.com/static/pack.png");
         config.put("discord_token", "");
         config.put("channel_id", "");
+        config.put("guild_id", "");
 
         if(!Files.exists(Paths.get("./plugins/minecraftdiscordchat/"))){
             File file = new File("./plugins/minecraftdiscordchat/");

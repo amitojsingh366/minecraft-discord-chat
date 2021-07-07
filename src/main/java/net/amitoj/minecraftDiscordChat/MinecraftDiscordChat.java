@@ -1,20 +1,14 @@
 package net.amitoj.minecraftDiscordChat;
 
 import net.amitoj.minecraftDiscordChat.commands.CommandMinecraftDiscordChat;
+import net.amitoj.minecraftDiscordChat.discord.DiscordClient;
 import net.amitoj.minecraftDiscordChat.listeners.*;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import javax.security.auth.login.LoginException;
-
 import static net.amitoj.minecraftDiscordChat.util.Util.*;
 
 
 public final class MinecraftDiscordChat extends JavaPlugin {
-    JDA jda;
-    DiscordChatListener discordChatListener;
+    DiscordClient discordClient;
 
     boolean isEnabled = GetIsEnabled();
     String chatWebhookUrl = GetConfig("chat_webhook_url");
@@ -22,7 +16,7 @@ public final class MinecraftDiscordChat extends JavaPlugin {
     String serverName = GetConfig("server_name");
     String serverIcon = GetConfig("server_icon");
     String discordToken = GetConfig("discord_token");
-    String channelID = GetConfig("channel_id");
+
 
     @Override
     public void onEnable() {
@@ -40,18 +34,7 @@ public final class MinecraftDiscordChat extends JavaPlugin {
 
         sendServerStartStopMessage(serverEventsWebhookUrl, serverName, serverIcon, "start");
 
-        discordChatListener = new DiscordChatListener();
-        discordChatListener.set_channelID(channelID);
-
-        JDABuilder builder = JDABuilder.createDefault(discordToken);
-        builder.setActivity(Activity.watching("You"));
-
-        try {
-            jda = builder.build();
-            jda.addEventListener(discordChatListener);
-        } catch (LoginException e) {
-            e.printStackTrace();
-        }
+        discordClient = new DiscordClient(discordToken);
 
         this.getCommand("minecraftdiscordchat").setExecutor(new CommandMinecraftDiscordChat());
     }
@@ -60,7 +43,7 @@ public final class MinecraftDiscordChat extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        jda.removeEventListener(discordChatListener);
+        discordClient.shutdown();
         sendServerStartStopMessage(serverEventsWebhookUrl, serverName, serverIcon, "stop");
     }
 }
