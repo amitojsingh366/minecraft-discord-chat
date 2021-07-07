@@ -16,7 +16,8 @@ import static net.amitoj.minecraftDiscordChat.util.Util.*;
 
 
 public final class MinecraftDiscordChat extends JavaPlugin {
-
+    JDA jda;
+    DiscordChatListener discordChatListener;
     @Override
     public void onEnable() {
         InitialisePlugin();
@@ -49,12 +50,12 @@ public final class MinecraftDiscordChat extends JavaPlugin {
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
         getServer().getPluginManager().registerEvents(playerQuitListener, this);
 
-        DiscordChatListener discordChatListener = new DiscordChatListener();
+        discordChatListener = new DiscordChatListener();
         discordChatListener.set_channelID(channelID);
 
         JDABuilder builder = JDABuilder.createDefault(discordToken);
         builder.setActivity(Activity.watching("You"));
-        JDA jda = null;
+
         try {
             jda = builder.build();
             jda.addEventListener(discordChatListener);
@@ -69,5 +70,6 @@ public final class MinecraftDiscordChat extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        jda.removeEventListener(discordChatListener);
     }
 }

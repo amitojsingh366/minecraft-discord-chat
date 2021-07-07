@@ -19,7 +19,7 @@ public class DiscordChatListener extends ListenerAdapter {
         if(!_channelID.equals("")){
             if(event.getChannel().getId().equals(_channelID)){
                 if(!event.getMessage().isWebhookMessage()){
-                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + event.getAuthor().getAsTag() + ": " + ChatColor.WHITE + event.getMessage().getContentRaw());
+                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + event.getAuthor().getAsTag() + ": " + ChatColor.WHITE + event.getMessage().getContentDisplay());
                 }
             }
         }
