@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat.listeners;
 
+import net.amitoj.minecraftDiscordChat.util.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -17,11 +18,11 @@ public class PlayerQuitListener implements Listener {
     private String _serverName;
     private String _serverIcon;
 
-    public PlayerQuitListener(boolean enabled, String webhookUrl, String serverName, String serverIcon) {
-        this._enabled = enabled;
-        this._webhookUrl = webhookUrl;
-        this._serverName = serverName;
-        this._serverIcon = serverIcon;
+    public PlayerQuitListener(Config config) {
+        this._enabled = config.enabled;
+        this._webhookUrl = config.eventsWebhookUrl;
+        this._serverName = config.serverName;
+        this._serverIcon = config.serverIcon;
     }
 
     @EventHandler

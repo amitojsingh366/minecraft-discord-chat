@@ -7,19 +7,17 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class SlashCommandListener extends ListenerAdapter {
     private String _guildID = "";
 
-    public SlashCommandListener(String guildID){
+    public SlashCommandListener(String guildID) {
         this._guildID = guildID;
     }
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
-        System.out.println("Used command "+ event.getName());
         if (event.getGuild() == null)
             return;
         if (!event.getGuild().getId().equals(_guildID))
             return;
-        switch (event.getName())
-        {
+        switch (event.getName()) {
             case "list":
                 new List(event);
                 break;

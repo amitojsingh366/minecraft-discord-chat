@@ -6,7 +6,7 @@
 
     <groupId>net.amitoj</groupId>
     <artifactId>minecraftDiscordChat</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>Minecraft Discord Chat</name>

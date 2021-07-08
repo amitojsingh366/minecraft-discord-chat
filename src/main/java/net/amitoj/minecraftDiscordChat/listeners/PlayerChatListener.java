@@ -1,6 +1,7 @@
 package net.amitoj.minecraftDiscordChat.listeners;
 
 
+import net.amitoj.minecraftDiscordChat.util.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -22,9 +23,9 @@ public class PlayerChatListener implements Listener {
     private boolean _enabled = true;
     private String _webhookUrl;
 
-    public PlayerChatListener(boolean enabled, String webhookUrl) {
-        this._enabled = enabled;
-        this._webhookUrl = webhookUrl;
+    public PlayerChatListener(Config config) {
+        this._enabled = config.enabled;
+        this._webhookUrl = config.chatWebhookUrl;
     }
 
     @EventHandler
