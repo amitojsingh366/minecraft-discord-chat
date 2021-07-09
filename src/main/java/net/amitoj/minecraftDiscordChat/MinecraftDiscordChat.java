@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat;
 
+import net.amitoj.minecraftDiscordChat.commands.CommandCoordinates;
 import net.amitoj.minecraftDiscordChat.commands.CommandMinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.discord.DiscordClient;
 import net.amitoj.minecraftDiscordChat.listeners.*;
@@ -30,6 +31,7 @@ public final class MinecraftDiscordChat extends JavaPlugin {
         discordClient = new DiscordClient(config);
 
         this.getCommand("minecraftdiscordchat").setExecutor(new CommandMinecraftDiscordChat(config));
+        this.getCommand("coordinates").setExecutor(new CommandCoordinates());
     }
 
 

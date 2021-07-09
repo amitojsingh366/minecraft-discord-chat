@@ -2,6 +2,7 @@ package net.amitoj.minecraftDiscordChat.listeners;
 
 
 import net.amitoj.minecraftDiscordChat.util.Config;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -30,11 +31,11 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if(_enabled){
+        if (_enabled) {
             HttpURLConnection con = null;
             try {
                 JSONObject postData = new JSONObject();
-                postData.put("content", event.getMessage());
+                postData.put("content", ChatColor.stripColor(event.getMessage()));
                 postData.put("username", event.getPlayer().getPlayerProfile().getName());
                 postData.put("avatar_url", "https://mc-heads.net/avatar/" + event.getPlayer().getPlayerProfile().getName());
 
