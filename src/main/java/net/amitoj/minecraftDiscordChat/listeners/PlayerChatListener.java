@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static net.amitoj.minecraftDiscordChat.util.Util.sendWH;
+
 
 public class PlayerChatListener implements Listener {
     private boolean _enabled = true;
@@ -32,26 +34,12 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (_enabled) {
-            HttpURLConnection con = null;
-            try {
-                JSONObject postData = new JSONObject();
-                postData.put("content", ChatColor.stripColor(event.getMessage()));
-                postData.put("username", event.getPlayer().getPlayerProfile().getName());
-                postData.put("avatar_url", "https://mc-heads.net/avatar/" + event.getPlayer().getPlayerProfile().getName());
+            JSONObject postData = new JSONObject();
+            postData.put("content", ChatColor.stripColor(event.getMessage()));
+            postData.put("username", event.getPlayer().getPlayerProfile().getName());
+            postData.put("avatar_url", "https://mc-heads.net/avatar/" + event.getPlayer().getPlayerProfile().getName());
 
-                con = (HttpURLConnection) new URL(_webhookUrl).openConnection();
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                con.setRequestProperty("Content-Type", "application/json");
-
-                try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                    wr.write(postData.toJSONString().getBytes());
-                }
-                con.getInputStream();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sendWH(postData, _webhookUrl);
         }
     }
 

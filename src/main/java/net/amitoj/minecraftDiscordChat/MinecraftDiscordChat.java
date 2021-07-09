@@ -31,7 +31,7 @@ public final class MinecraftDiscordChat extends JavaPlugin {
         discordClient = new DiscordClient(config);
 
         this.getCommand("minecraftdiscordchat").setExecutor(new CommandMinecraftDiscordChat(config));
-        this.getCommand("coordinates").setExecutor(new CommandCoordinates());
+        this.getCommand("coordinates").setExecutor(new CommandCoordinates(config));
     }
 
 

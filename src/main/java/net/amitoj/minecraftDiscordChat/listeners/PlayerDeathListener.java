@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static net.amitoj.minecraftDiscordChat.util.Util.sendWH;
+
 public class PlayerDeathListener implements Listener {
     private boolean _enabled = true;
     private String _webhookUrl;
@@ -28,39 +30,26 @@ public class PlayerDeathListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (_enabled) {
-            HttpURLConnection con = null;
-            try {
-                JSONObject postData = new JSONObject();
-                postData.put("content", "");
+            JSONObject postData = new JSONObject();
+            postData.put("content", "");
 
 
-                JSONArray embeds = new JSONArray();
-                JSONObject embed = new JSONObject();
-                JSONObject thumbnail = new JSONObject();
-                thumbnail.put("url", "https://mc-heads.net/avatar/" + event.getEntity().getPlayerProfile().getName());
+            JSONArray embeds = new JSONArray();
+            JSONObject embed = new JSONObject();
+            JSONObject thumbnail = new JSONObject();
+            thumbnail.put("url", "https://mc-heads.net/avatar/" + event.getEntity().getPlayerProfile().getName());
 
-                embed.put("title", "Player Died");
-                embed.put("description", event.getDeathMessage());
-                embed.put("color", 16711680);
-                embed.put("thumbnail", thumbnail);
-                embeds.add(embed);
+            embed.put("title", "Player Died");
+            embed.put("description", event.getDeathMessage());
+            embed.put("color", 16711680);
+            embed.put("thumbnail", thumbnail);
+            embeds.add(embed);
 
-                postData.put("embeds", embeds);
-                postData.put("username", _serverName);
-                postData.put("avatar_url", _serverIcon);
+            postData.put("embeds", embeds);
+            postData.put("username", _serverName);
+            postData.put("avatar_url", _serverIcon);
 
-                con = (HttpURLConnection) new URL(_webhookUrl).openConnection();
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                con.setRequestProperty("Content-Type", "application/json");
-
-                try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                    wr.write(postData.toJSONString().getBytes());
-                }
-                con.getInputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sendWH(postData, _webhookUrl);
         }
     }
 
