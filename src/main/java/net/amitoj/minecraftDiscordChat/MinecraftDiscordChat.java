@@ -5,6 +5,7 @@ import net.amitoj.minecraftDiscordChat.commands.CommandMinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.discord.DiscordClient;
 import net.amitoj.minecraftDiscordChat.listeners.*;
 import net.amitoj.minecraftDiscordChat.util.Config;
+import net.amitoj.minecraftDiscordChat.util.Updater;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static net.amitoj.minecraftDiscordChat.util.Util.*;
@@ -16,6 +17,8 @@ public final class MinecraftDiscordChat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Updater updater = new Updater(this, config);
+
         PlayerChatListener playerChatListener = new PlayerChatListener(config);
         PlayerJoinListener playerJoinListener = new PlayerJoinListener(config);
         PlayerQuitListener playerQuitListener = new PlayerQuitListener(config);

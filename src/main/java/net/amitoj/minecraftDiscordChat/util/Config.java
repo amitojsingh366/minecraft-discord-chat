@@ -16,6 +16,7 @@ public class Config {
     public JSONObject defaultConfig = new JSONObject();
 
     public boolean enabled;
+    public boolean shouldAutoUpdate;
     public String chatWebhookUrl;
     public String eventsWebhookUrl;
     public String serverName;
@@ -48,6 +49,7 @@ public class Config {
         }
 
         setEnabled((Boolean) config.get("enabled"));
+        setShouldAutoUpdate((Boolean) config.get("should_auto_update"));
         setChatWebhookUrl((String) config.get("chat_webhook_url"));
         setEventsWebhookUrl((String) config.get("events_webhook_url"));
         setServerName((String) config.get("server_name"));
@@ -97,6 +99,7 @@ public class Config {
     private void setConfig() {
         JSONObject config = new JSONObject();
         config.put("enabled", enabled);
+        config.put("should_auto_update", shouldAutoUpdate);
         config.put("chat_webhook_url", chatWebhookUrl);
         config.put("events_webhook_url", eventsWebhookUrl);
         config.put("server_name", serverName);
@@ -119,6 +122,7 @@ public class Config {
 
     private void setDefaults() {
         defaultConfig.put("enabled", true);
+        defaultConfig.put("should_auto_update", true);
         defaultConfig.put("chat_webhook_url", "");
         defaultConfig.put("events_webhook_url", "");
         defaultConfig.put("server_name", "Minecarft Server");
@@ -181,6 +185,11 @@ public class Config {
 
     public void setGuildID(String guildID) {
         this.guildID = guildID;
+        setConfig();
+    }
+
+    public void setShouldAutoUpdate(boolean shouldAutoUpdate) {
+        this.shouldAutoUpdate = shouldAutoUpdate;
         setConfig();
     }
 }
