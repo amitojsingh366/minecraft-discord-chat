@@ -7,11 +7,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import static net.amitoj.minecraftDiscordChat.util.Util.sendWH;
 
 public class PlayerDeathListener implements Listener {
