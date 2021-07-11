@@ -1,11 +1,13 @@
 package net.amitoj.minecraftDiscordChat.listeners;
 
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.util.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 
 import static net.amitoj.minecraftDiscordChat.util.Util.sendWH;
@@ -15,9 +17,9 @@ public class PlayerChatListener implements Listener {
     private boolean _enabled = true;
     private String _webhookUrl;
 
-    public PlayerChatListener(Config config) {
-        this._enabled = config.enabled;
-        this._webhookUrl = config.chatWebhookUrl;
+    public PlayerChatListener(MinecraftDiscordChat plugin) {
+        this._enabled = plugin.config.enabled;
+        this._webhookUrl = plugin.config.chatWebhookUrl;
     }
 
     @EventHandler

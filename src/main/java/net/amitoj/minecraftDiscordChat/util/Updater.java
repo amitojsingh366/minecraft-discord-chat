@@ -67,7 +67,7 @@ public class Updater {
                     setDownloadUrl((String) newAsset.get("browser_download_url"));
                     setNewFileName((String) newAsset.get("name"));
 
-                    System.out.println("Update to version " + api_version + " is available");
+                    _plugin.getLogger().info("Update to version " + api_version + " is available");
                 }
             }
 
@@ -82,10 +82,10 @@ public class Updater {
         if (files != null) {
             for (File file : files) {
                 if (file.getName().startsWith("minecraftDiscordChat")) {
-                    if(file.getName().endsWith(".jar")){
+                    if (file.getName().endsWith(".jar")) {
                         if (!file.getName().endsWith(currentVersion + ".jar")) {
                             file.delete();
-                            System.out.println("Deleted old version: " + file.getName());
+                            _plugin.getLogger().info("Deleted old version: " + file.getName());
                         }
                     }
                 }
@@ -95,7 +95,7 @@ public class Updater {
 
     public void tryUpdating() {
         if (newVersion != null && downloadUrl != null) {
-            System.out.println("Starting download of version " + newVersion);
+            _plugin.getLogger().info("Starting download of version " + newVersion);
             URL url = null;
             try {
                 url = new URL(downloadUrl);
@@ -103,7 +103,7 @@ public class Updater {
                 ReadableByteChannel rbc = Channels.newChannel(in);
                 FileOutputStream fos = new FileOutputStream("./plugins/" + newFileName);
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                System.out.println("Version " + newVersion + " downloaded, please restart/reload your server to apply the update");
+                _plugin.getLogger().info("Version " + newVersion + " downloaded, please restart/reload your server to apply the update");
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat.commands;
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.util.Config;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -18,8 +19,8 @@ import static net.amitoj.minecraftDiscordChat.util.Util.sendWH;
 public class CommandCoordinates implements CommandExecutor {
     private Config _config;
 
-    public CommandCoordinates(Config config) {
-        this._config = config;
+    public CommandCoordinates(MinecraftDiscordChat plugin) {
+        this._config = plugin.config;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class CommandCoordinates implements CommandExecutor {
         }
 
         JSONObject postData = new JSONObject();
-        postData.put("content", "My current coordinates are: **"+ dimension +"** `" + coordinates + "`");
+        postData.put("content", "My current coordinates are: **" + dimension + "** `" + coordinates + "`");
         postData.put("username", sender.getName());
         postData.put("avatar_url", "https://mc-heads.net/avatar/" + sender.getName());
 

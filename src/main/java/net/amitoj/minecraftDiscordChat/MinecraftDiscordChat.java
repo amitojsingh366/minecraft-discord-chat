@@ -12,17 +12,16 @@ import static net.amitoj.minecraftDiscordChat.util.Util.*;
 
 
 public final class MinecraftDiscordChat extends JavaPlugin {
-    DiscordClient discordClient;
-    Config config = new Config();
+    public DiscordClient discordClient;
+    public Config config = new Config();
+    public Updater updater = new Updater(this, config);
 
     @Override
     public void onEnable() {
-        Updater updater = new Updater(this, config);
-
-        PlayerChatListener playerChatListener = new PlayerChatListener(config);
-        PlayerJoinListener playerJoinListener = new PlayerJoinListener(config);
-        PlayerQuitListener playerQuitListener = new PlayerQuitListener(config);
-        PlayerDeathListener playerDeathListener = new PlayerDeathListener(config);
+        PlayerChatListener playerChatListener = new PlayerChatListener(this);
+        PlayerJoinListener playerJoinListener = new PlayerJoinListener(this);
+        PlayerQuitListener playerQuitListener = new PlayerQuitListener(this);
+        PlayerDeathListener playerDeathListener = new PlayerDeathListener(this);
 
         getServer().getPluginManager().registerEvents(playerChatListener, this);
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
@@ -33,8 +32,8 @@ public final class MinecraftDiscordChat extends JavaPlugin {
 
         discordClient = new DiscordClient(config);
 
-        this.getCommand("minecraftdiscordchat").setExecutor(new CommandMinecraftDiscordChat(config));
-        this.getCommand("coordinates").setExecutor(new CommandCoordinates(config));
+        this.getCommand("minecraftdiscordchat").setExecutor(new CommandMinecraftDiscordChat(this));
+        this.getCommand("coordinates").setExecutor(new CommandCoordinates(this));
     }
 
 

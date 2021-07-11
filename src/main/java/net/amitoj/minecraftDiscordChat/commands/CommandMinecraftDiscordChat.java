@@ -1,16 +1,19 @@
 package net.amitoj.minecraftDiscordChat.commands;
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.util.Config;
-import net.amitoj.minecraftDiscordChat.util.Util;
+import net.amitoj.minecraftDiscordChat.util.Updater;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class CommandMinecraftDiscordChat implements CommandExecutor {
     Config _config;
+    Updater _updater;
 
-    public CommandMinecraftDiscordChat(Config config) {
-        this._config = config;
+    public CommandMinecraftDiscordChat(MinecraftDiscordChat plugin) {
+        this._config = plugin.config;
+        this._updater = plugin.updater;
     }
 
     // This method is called, when somebody uses our command
@@ -24,6 +27,10 @@ public class CommandMinecraftDiscordChat implements CommandExecutor {
             case "off":
             case "disable":
                 _config.setEnabled(false);
+                return true;
+            case "update":
+                _updater.checkForUpdates();
+                _updater.tryUpdating();
                 return true;
             default:
                 return false;

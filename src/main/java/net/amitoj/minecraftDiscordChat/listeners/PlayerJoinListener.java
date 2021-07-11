@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat.listeners;
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import net.amitoj.minecraftDiscordChat.util.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,11 +16,11 @@ public class PlayerJoinListener implements Listener {
     private String _serverName;
     private String _serverIcon;
 
-    public PlayerJoinListener(Config config) {
-        this._enabled = config.enabled;
-        this._webhookUrl = config.eventsWebhookUrl;
-        this._serverName = config.serverName;
-        this._serverIcon = config.serverIcon;
+    public PlayerJoinListener(MinecraftDiscordChat plugin) {
+        this._enabled = plugin.config.enabled;
+        this._webhookUrl = plugin.config.eventsWebhookUrl;
+        this._serverName = plugin.config.serverName;
+        this._serverIcon = plugin.config.serverIcon;
     }
 
     @EventHandler
