@@ -15,7 +15,7 @@ commands:
   coordinates:
     aliases: [ coords ]
     description: Send the player's current coordinates in chat
-    usage: "Usage: /<command>"
+    usage: "Usage: /<command> [location]"
 permissions:
   minecraftDiscordChat.default:
     description: Gives permission to change Minecraft Discord Chat settings

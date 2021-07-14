@@ -32,6 +32,13 @@ public class CommandCoordinates implements CommandExecutor {
                 + " Z:" + player.getLocation().getBlockZ();
 
         String dimension = "Overworld";
+        String location = "My current";
+
+        if (args != null) {
+            if (String.join(",", args) != "") {
+                location = String.join(",", args);
+            }
+        }
 
         switch (player.getWorld().getEnvironment()) {
             case NORMAL:
@@ -45,7 +52,7 @@ public class CommandCoordinates implements CommandExecutor {
                 break;
         }
 
-        TextComponent message = new TextComponent("<" + player.getName() + "> My current coordinates are: " +
+        TextComponent message = new TextComponent("<" + player.getName() + "> " + location + " coordinates are: " +
                 ChatColor.YELLOW + dimension + " " +
                 ChatColor.BOLD + ChatColor.LIGHT_PURPLE + coordinates);
         message.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, coordinates));
@@ -57,7 +64,7 @@ public class CommandCoordinates implements CommandExecutor {
         }
 
         JSONObject postData = new JSONObject();
-        postData.put("content", "My current coordinates are: **" + dimension + "** `" + coordinates + "`");
+        postData.put("content", location + " coordinates are: **" + dimension + "** `" + coordinates + "`");
         postData.put("username", sender.getName());
         postData.put("avatar_url", "https://mc-heads.net/avatar/" + sender.getName());
 
