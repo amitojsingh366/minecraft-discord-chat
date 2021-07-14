@@ -1,8 +1,11 @@
 package net.amitoj.minecraftDiscordChat.discord.listeners;
 
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.MessageSticker;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +24,33 @@ public class MessageListener extends ListenerAdapter {
                 if (!event.getMessage().isWebhookMessage()) {
                     StringBuilder attachments = new StringBuilder();
                     boolean isEmpty = event.getMessage().getContentDisplay().equals("");
+
+                    for (MessageEmbed embed : event.getMessage().getEmbeds()) {
+                        if (isEmpty) {
+                            attachments.append("\n[Sent ");
+                        } else {
+                            attachments.append("\n[Attached ");
+                        }
+                        attachments.append("an embed]");
+                    }
+
+                    for (MessageSticker sticker : event.getMessage().getStickers()) {
+                        if (isEmpty) {
+                            attachments.append("\n[Sent ");
+                        } else {
+                            attachments.append("\n[Attached ");
+                        }
+                        attachments.append(sticker.getName()).append(" sticker]");
+                    }
+
+                    for (ActionRow row : event.getMessage().getActionRows()) {
+                        if (isEmpty) {
+                            attachments.append("\n[Sent ");
+                        } else {
+                            attachments.append("\n[Attached ");
+                        }
+                        attachments.append(" an action row]");
+                    }
 
                     for (Message.Attachment attachment : event.getMessage().getAttachments()) {
                         if (isEmpty) {

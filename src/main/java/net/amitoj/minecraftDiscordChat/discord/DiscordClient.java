@@ -22,7 +22,7 @@ public class DiscordClient extends ListenerAdapter {
 
         if (_config.enabled) {
             JDABuilder builder = JDABuilder.createDefault(_config.discordToken);
-            builder.setActivity(Activity.watching("Your every move"));
+            builder.setActivity(Activity.watching("your every move"));
 
             try {
                 messageListener = new MessageListener(_config.channelID);
