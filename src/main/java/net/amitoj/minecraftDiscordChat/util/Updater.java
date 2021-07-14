@@ -84,8 +84,13 @@ public class Updater {
                 if (file.getName().startsWith("minecraftDiscordChat")) {
                     if (file.getName().endsWith(".jar")) {
                         if (!file.getName().endsWith(currentVersion + ".jar")) {
-                            file.delete();
-                            _plugin.getLogger().info("Deleted old version: " + file.getName());
+                            Float ver = Float.parseFloat(file.getName().replace("minecraftDiscordChat-", "")
+                                    .replace(".jar", ""));
+
+                            if (currentVersion > ver) {
+                                file.delete();
+                                _plugin.getLogger().info("Deleted old version: " + file.getName());
+                            }
                         }
                     }
                 }
