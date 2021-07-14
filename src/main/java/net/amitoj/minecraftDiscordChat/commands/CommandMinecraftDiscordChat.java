@@ -23,14 +23,17 @@ public class CommandMinecraftDiscordChat implements CommandExecutor {
             case "on":
             case "enable":
                 _config.setEnabled(true);
+                sender.sendMessage("Disabled Minecraft Discord Chat, you might need to restart your server once to apply changes");
                 return true;
             case "off":
             case "disable":
                 _config.setEnabled(false);
+                sender.sendMessage("Enabled Minecraft Discord Chat, you might need to restart your server once to apply changes");
                 return true;
             case "update":
                 _updater.checkForUpdates();
                 _updater.tryUpdating();
+                sender.sendMessage("Checking for updates...");
                 return true;
             default:
                 return false;
