@@ -35,8 +35,8 @@ public class CommandCoordinates implements CommandExecutor {
         String location = "My current";
 
         if (args != null) {
-            if (String.join(",", args) != "") {
-                location = String.join(",", args);
+            if (!String.join(" ", args).equals("")) {
+                location = String.join(" ", args);
             }
         }
 
