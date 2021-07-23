@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat.util;
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Config {
+    private MinecraftDiscordChat _plugin;
     public String configPath = "./plugins/minecraftdiscordchat/config.json";
     public JSONObject defaultConfig = new JSONObject();
 
@@ -25,7 +27,9 @@ public class Config {
     public String channelID;
     public String guildID;
 
-    public Config() {
+    public Config(MinecraftDiscordChat plugin) {
+        this._plugin = plugin;
+
         setDefaults();
         checkConfigPath();
         checkConfigUpdates();
@@ -75,11 +79,10 @@ public class Config {
             e.printStackTrace();
         }
 
-        System.out.println(0);
         for (Object o : defaultConfig.keySet()) {
             String key = (String) o;
             if (config.get(key) == null) {
-                System.out.println("Adding " + key + " to config");
+                _plugin.getLogger().info("Adding " + key + " to config");
                 config.put(key, defaultConfig.get(key));
             }
         }
@@ -136,7 +139,7 @@ public class Config {
         if (!Files.exists(Paths.get("./plugins/minecraftdiscordchat/"))) {
             File file = new File("./plugins/minecraftdiscordchat/");
             if (file.mkdir()) {
-                System.out.println("Successfully created plugin folder");
+                _plugin.getLogger().info("Successfully created plugin folder");
             }
         }
         if (!Files.exists(Paths.get(configPath))) {

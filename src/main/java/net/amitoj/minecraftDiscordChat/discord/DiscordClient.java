@@ -33,7 +33,12 @@ public class DiscordClient extends ListenerAdapter {
                 jda = builder.build();
                 jda.awaitReady();
 
-                jda.getGuildById(_config.guildID).upsertCommand("list", "List all the online people on your minecraft server")
+                jda.getGuildById(_config.guildID)
+                        .upsertCommand("stats", "Get basic stats about your minecraft server")
+                        .queue();
+
+                jda.getGuildById(_config.guildID)
+                        .upsertCommand("list", "List all the online people on your minecraft server")
                         .queue();
             } catch (LoginException | InterruptedException e) {
                 e.printStackTrace();

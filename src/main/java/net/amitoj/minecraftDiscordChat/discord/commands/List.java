@@ -21,6 +21,6 @@ public class List {
         }
 
         event.reply("Players online: " + onlinePlayerNames.substring(0, onlinePlayerNames.length() - 2))
-                .setEphemeral(true).queue();
+                .queue();
     }
 }

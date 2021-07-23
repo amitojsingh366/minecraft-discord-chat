@@ -13,7 +13,7 @@ import static net.amitoj.minecraftDiscordChat.util.Util.*;
 
 public final class MinecraftDiscordChat extends JavaPlugin {
     public DiscordClient discordClient;
-    public Config config = new Config();
+    public Config config = new Config(this);
     public Updater updater = new Updater(this, config);
 
     @Override
