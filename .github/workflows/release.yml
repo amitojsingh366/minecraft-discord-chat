@@ -25,4 +25,4 @@ jobs:
       - name: Upload built JAR
         uses: softprops/action-gh-release@v1
         with:
-          files: target/minecraftUtilities*.jar
+          files: target/minecraftDiscordChat*.jar
