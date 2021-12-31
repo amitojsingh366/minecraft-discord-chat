@@ -1,5 +1,6 @@
 package net.amitoj.minecraftDiscordChat.util;
 
+import net.amitoj.minecraftDiscordChat.MinecraftDiscordChat;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,17 +20,17 @@ import java.util.Scanner;
 public class Updater {
     private Config _config;
     private JavaPlugin _plugin;
-    private String _apiUrl = "https://api.github.com/repos/amitojsingh366/minecraft-discord-chat/releases/latest";
+    private String _apiUrl = "https://github.com/amitojsingh366/minecraft-discord-chat/releases/latest";
 
     public boolean updateAvailable;
-    public Float currentVersion;
+    public String[] currentVersion;
     public Float newVersion;
     public String downloadUrl;
     public String newFileName;
 
-    public Updater(JavaPlugin plugin, Config config) {
+    public Updater(MinecraftDiscordChat plugin) {
         this._plugin = plugin;
-        this._config = config;
+        this._config = plugin.config;
         checkForUpdates();
         deleteOldFiles();
         if (_config.shouldAutoUpdate && updateAvailable) {
@@ -38,7 +39,7 @@ public class Updater {
     }
 
     public void checkForUpdates() {
-        Float current_version = Float.parseFloat(_plugin.getDescription().getVersion());
+        String[] current_version = _plugin.getDescription().getVersion().split("\\.");
         setCurrentVersion(current_version);
 
         try {
@@ -81,13 +82,13 @@ public class Updater {
         File[] files = folder.listFiles();
         if (files != null) {
             for (File file : files) {
-                if (file.getName().startsWith("minecraftDiscordChat")) {
+                if (file.getName().startsWith("minecraftMentions")) {
                     if (file.getName().endsWith(".jar")) {
                         if (!file.getName().endsWith(currentVersion + ".jar")) {
-                            Float ver = Float.parseFloat(file.getName().replace("minecraftDiscordChat-", "")
-                                    .replace(".jar", ""));
+                            String[] ver = file.getName().replace("minecraftMentions-", "")
+                                    .replace(".jar", "").split("\\.");
 
-                            if (currentVersion > ver) {
+                            if (isCurrentNewer(ver)) {
                                 file.delete();
                                 _plugin.getLogger().info("Deleted old version: " + file.getName());
                             }
@@ -96,6 +97,15 @@ public class Updater {
                 }
             }
         }
+    }
+
+    private boolean isCurrentNewer(String[] oldVer) {
+        if (Integer.parseInt(this.currentVersion[0]) > Integer.parseInt(oldVer[0])) {
+            if (Integer.parseInt(this.currentVersion[1]) > Integer.parseInt(oldVer[1])) {
+                return Integer.parseInt(this.currentVersion[2]) > Integer.parseInt(oldVer[2]);
+            }
+        }
+        return false;
     }
 
     public void tryUpdating() {
@@ -119,7 +129,7 @@ public class Updater {
         this.updateAvailable = updateAvailable;
     }
 
-    public void setCurrentVersion(Float currentVersion) {
+    public void setCurrentVersion(String[] currentVersion) {
         this.currentVersion = currentVersion;
     }
 
