@@ -9,9 +9,12 @@ import java.net.URL;
 
 public class Util {
 
-    public static void sendWH(JSONObject data, String url){
+    public static void sendWH(JSONObject data, String url) {
         HttpURLConnection con = null;
         try {
+            JSONObject allowedMentions = new JSONObject();
+            allowedMentions.put("parse", new JSONArray());
+            data.put("allowed_mentions", allowedMentions);
             con = (HttpURLConnection) new URL(url).openConnection();
             con.setDoOutput(true);
             con.setRequestMethod("POST");
